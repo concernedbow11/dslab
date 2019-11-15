@@ -34,16 +34,15 @@ void find(int item,node parent){
 	}
 }
 
-node findParent(int item,node parent){
-	if (parent==NULL)
-		return NULL;
-	else if (parent->rc->data==item||parent->lc->data==item){
-		flag=1;
-		return parent;
-		
-	}	
-	findParent(item,root->lc);
-    	findParent(item,root->rc);
+void findParent(int item,node parent){
+	if(parent!=NULL){
+		if (parent->rc->data==item||parent->lc->data==item){
+			flag=1;
+			foundp=parent;
+		}	
+		findParent(item,parent->lc);
+    		findParent(item,parent->rc);
+	}
 }
 	
 void inorder(node root){
@@ -87,11 +86,11 @@ void traverse(){
 
 void delete(int item){
 	flag=0;
-	foundp=findParent(item,root);
+	findParent(item,root);
 	if(flag==1){
 		printf("\nItem found!");
 		if((foundp->lc->data)==item){
-			if(foundp->rc->==NULL&&foundp->lc==NULL)
+			if(foundp->rc==NULL&&foundp->lc==NULL)
 				foundp->lc=NULL;
 			else{
 				printf("\nNode with item is not a leaf node!");
@@ -100,7 +99,7 @@ void delete(int item){
 		}
 			
 		else{
-			if(foundp->rc->==NULL&&foundp->lc==NULL)
+			if(foundp->rc==NULL&&foundp->lc==NULL)
 				foundp->rc=NULL;
 			else{
 				printf("\nNode with item is not a leaf node!");
